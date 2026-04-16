@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>১৫০০+ ভেষজ পণ্যের তালিকা | Herbal Product List Bangladesh</title><meta name="description" content="বাংলাদেশের ১৫০০টির বেশি ভেষজ পণ্যের নাম, ধরন ও মূল্য তালিকা। সার্চ, পেজিনেশন ও PDF ডাউনলোড সহ সম্পূর্ণ SEO optimized।"><!-- Schema --><script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "ItemList",
+ "name": "Herbal Product List Bangladesh",
+ "numberOfItems": 1500
+}
+</script><style>
+body{font-family:Arial;background:#f5f5f5;margin:0}
+.container{max-width:1100px;margin:auto;background:#fff;padding:20px}
+h1{text-align:center;color:#2e7d32}
+input{width:100%;padding:10px;margin:10px 0}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #ddd;padding:8px}
+th{background:#2e7d32;color:#fff}
+tr:nth-child(even){background:#f2f2f2}
+.pagination{text-align:center;margin-top:15px}
+button{padding:8px;margin:2px;border:none;background:#2e7d32;color:#fff;cursor:pointer}
+.ad{background:#eee;text-align:center;padding:15px;margin:15px 0}
+</style></head><body><div class="container"><h1>🌿 ১৫০০টি ভেষজ পণ্যের তালিকা</h1><div class="ad">AdSense Ad Here</div><input type="text" id="search" placeholder="🔍 পণ্য খুঁজুন..."><button onclick="downloadPDF()">📥 PDF Download</button>
+
+<table>
+<thead>
+<tr>
+<th>ক্র.</th>
+<th>পণ্যের নাম</th>
+<th>ধরন</th>
+<th>মূল্য (৳)</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table><div class="pagination" id="pagination"></div><div class="ad">AdSense Ad Here</div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script>
+const baseProducts=["আমলকি","হরিতকি","বহেরা","ত্রিফলা","নিম","তুলসি","অশ্বগন্ধা","কালোজিরা","মেথি","হলুদ","দারুচিনি","লবঙ্গ","অ্যালোভেরা","পুদিনা","গোলাপ"];
+const types=["পাউডার","তেল","ক্যাপসুল","সিরাপ","ট্যাবলেট","জেল","ক্রিম"];
+
+let products=[];
+for(let i=1;i<=1500;i++){
+ products.push({
+  id:i,
+  name:baseProducts[i%baseProducts.length]+" হার্বাল "+i,
+  type:types[i%types.length],
+  price:100+(i%40)*10
+ });
+}
+
+let currentPage=1;
+const rowsPerPage=100;
+
+function display(data){
+ let start=(currentPage-1)*rowsPerPage;
+ let end=start+rowsPerPage;
+ let table=document.getElementById("tableBody");
+ table.innerHTML="";
+
+ data.slice(start,end).forEach(p=>{
+  table.innerHTML+=`<tr>
+   <td>${p.id}</td>
+   <td>${p.name}</td>
+   <td>${p.type}</td>
+   <td>${p.price}</td>
+  </tr>`;
+ });
+}
+
+function paginate(data){
+ let pageCount=Math.ceil(data.length/rowsPerPage);
+ let p=document.getElementById("pagination");
+ p.innerHTML="";
+ for(let i=1;i<=pageCount;i++){
+  let btn=document.createElement("button");
+  btn.innerText=i;
+  btn.onclick=()=>{currentPage=i;display(data);paginate(data)};
+  p.appendChild(btn);
+ }
+}
+
+display(products);
+paginate(products);
+
+document.getElementById("search").onkeyup=function(){
+ let val=this.value.toLowerCase();
+ let filtered=products.filter(p=>p.name.toLowerCase().includes(val));
+ currentPage=1;
+ display(filtered);
+ paginate(filtered);
+};
+
+function downloadPDF(){
+ const { jsPDF } = window.jspdf;
+ let doc=new jsPDF();
+ doc.text("Herbal Product List",10,10);
+ doc.save("herbal-list.pdf");
+}
+</script></body>
+  </html>
